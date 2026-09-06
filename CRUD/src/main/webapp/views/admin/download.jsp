@@ -6,177 +6,33 @@
     <meta charset="UTF-8">
     <title>Kiểm tra tải và hiển thị ảnh</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --mint-50: #f2faf6;
-            --mint-100: #e3f6ec;
-            --mint-200: #c9ecda;
-            --mint-300: #a9e0c3;
-            --mint-400: #7fd1a6;
-            --mint-500: #5cbd8c;
-            --mint-600: #479f73;
-            --mint-700: #38805d;
-            --ink: #2f4a3d;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(160deg, var(--mint-50) 0%, #eef9f2 45%, #e6f5ec 100%);
-            min-height: 100vh;
-            color: var(--ink);
-        }
-
-        .page-wrap {
-            max-width: 750px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .page-header {
-            background: linear-gradient(120deg, var(--mint-400), var(--mint-500));
-            border-radius: 22px;
-            padding: 26px 30px;
-            box-shadow: 0 10px 30px rgba(92, 189, 140, 0.35);
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 26px;
-        }
-
-        .page-header::before {
-            content: "";
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 50%;
-            top: -70px;
-            right: -50px;
-        }
-
-        .page-header h2 {
-            color: #fff;
-            font-weight: 700;
-            margin: 0;
-            font-size: 20px;
-            letter-spacing: 0.4px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .page-header p {
-            color: rgba(255,255,255,0.9);
-            margin: 6px 0 0;
-            font-size: 13.5px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .search-card {
-            background: #fff;
-            border-radius: 20px;
-            padding: 22px 26px;
-            box-shadow: 0 10px 30px rgba(92, 189, 140, 0.15);
-            margin-bottom: 24px;
-        }
-
-        .search-card label {
-            font-weight: 600;
-            color: var(--mint-700);
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.4px;
-            margin-right: 10px;
-        }
-
-        .search-card .form-control {
-            border: 1.5px solid var(--mint-200);
-            border-radius: 12px;
-            padding: 9px 14px;
-            font-size: 14px;
-            box-shadow: none;
-            transition: all 0.2s ease;
-        }
-
-        .search-card .form-control:focus {
-            border-color: var(--mint-500);
-            box-shadow: 0 0 0 3px rgba(92, 189, 140, 0.2);
-        }
-
-        .btn {
-            border-radius: 24px;
-            font-weight: 600;
-            padding: 9px 22px;
-            border: none;
-            transition: all 0.25s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-        }
-
-        .btn-primary {
-            background: linear-gradient(120deg, var(--mint-500), var(--mint-600));
-            color: #fff;
-        }
-        .btn-primary:hover {
-            background: linear-gradient(120deg, var(--mint-600), var(--mint-700));
-            color: #fff;
-        }
-
-        .btn-default {
-            background: #f4f4f4;
-            color: #6b6b6b;
-        }
-        .btn-default:hover {
-            background: #e8e8e8;
-            color: #444;
-            text-decoration: none;
-        }
-
-        .result-card {
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(92, 189, 140, 0.18);
-            border: none;
-        }
-
-        .result-heading {
-            background: var(--mint-100);
-            color: var(--mint-700);
-            font-weight: 600;
-            font-size: 14px;
-            padding: 14px 20px;
-            border: none;
-        }
-
-        .result-heading b {
-            color: var(--mint-700);
-        }
-
-        .result-body {
-            padding: 26px;
-        }
-
-        .result-body img {
-            border-radius: 14px;
-            border: 3px solid var(--mint-200);
-            box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-        }
-
-        .back-link {
-            margin-top: 24px;
-            display: inline-block;
-        }
+        :root { --ink: #1c1c1c; --muted: #6b6b6b; --border: #dcdcdc; --surface: #ffffff; --accent: #2f5d50; --accent-dark: #24463c; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f6f6f4; color: var(--ink); }
+        .page-wrap { max-width: 720px; margin: 0 auto; padding: 40px 20px 60px; }
+        .topbar { border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 24px; }
+        .topbar h1 { font-size: 20px; font-weight: 600; margin: 0; }
+        .topbar p { color: var(--muted); font-size: 13.5px; margin: 4px 0 0; }
+        .search-card { background: var(--surface); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 22px; }
+        .search-card label { font-weight: 500; color: var(--ink); font-size: 13.5px; margin-right: 10px; }
+        .search-card .form-control { border: 1px solid var(--border); border-radius: 4px; padding: 8px 12px; font-size: 14px; box-shadow: none; }
+        .btn { border-radius: 4px; font-weight: 500; padding: 9px 20px; border: 1px solid transparent; font-size: 14px; }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-primary:hover { background: var(--accent-dark); color: #fff; }
+        .btn-default { background: #fff; color: var(--muted); border-color: var(--border); }
+        .btn-default:hover { background: #f2f2f2; color: var(--ink); text-decoration: none; }
+        .result-card { background: var(--surface); border: 1px solid var(--border); }
+        .result-heading { background: #fafafa; color: var(--ink); font-weight: 500; font-size: 14px; padding: 12px 18px; border-bottom: 1px solid var(--border); }
+        .result-body { padding: 24px; }
+        .result-body img { border: 1px solid var(--border); }
+        .back-link { margin-top: 22px; display: inline-block; }
     </style>
 </head>
 <body>
     <div class="page-wrap">
 
-        <div class="page-header">
-            <h2>🖼️ Kiểm tra tải và hiển thị ảnh</h2>
+        <div class="topbar">
+            <h1>Kiểm tra tải và hiển thị ảnh</h1>
             <p>Test hiển thị ảnh từ Controller /image</p>
         </div>
 
@@ -191,17 +47,15 @@
             </form>
         </div>
 
-        <!-- Hiển thị ảnh nếu có tham số fname truyền vào -->
         <c:if test="${not empty param.fname}">
             <div class="result-card">
-                <div class="result-heading"><b>Kết quả hiển thị cho file:</b> ${param.fname}</div>
+                <div class="result-heading">Kết quả hiển thị cho file: ${param.fname}</div>
                 <div class="result-body text-center">
-                    <!-- Gọi trực tiếp đến Servlet DownloadImageController qua URL /image?fname=... -->
                     <c:url value="/image" var="imgUrl">
                         <c:param name="fname" value="${param.fname}" />
                     </c:url>
 
-                    <img src="${imgUrl}" class="img-responsive img-thumbnail" alt="Uploaded Image" style="max-height: 400px; margin: 0 auto;"
+                    <img src="${imgUrl}" class="img-responsive" alt="Uploaded Image" style="max-height: 400px; margin: 0 auto;"
                          onerror="this.onerror=null; this.src='https://via.placeholder.com/300x200?text=Khong+Tim+Thay+Anh';" />
                 </div>
             </div>

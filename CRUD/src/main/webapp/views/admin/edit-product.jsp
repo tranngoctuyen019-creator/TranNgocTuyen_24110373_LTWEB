@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Chỉnh sửa danh mục</title>
+    <title>Chỉnh sửa sản phẩm</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <style>
         :root { --ink: #1c1c1c; --muted: #6b6b6b; --border: #dcdcdc; --surface: #ffffff; --accent: #2f5d50; --accent-dark: #24463c; }
@@ -15,17 +15,14 @@
         .topbar p { color: var(--muted); font-size: 13.5px; margin: 4px 0 0; }
         .form-card { background: var(--surface); border: 1px solid var(--border); padding: 28px 30px; }
         .form-group label { font-weight: 500; color: var(--ink); font-size: 13.5px; margin-bottom: 6px; }
-        .form-control { border: 1px solid var(--border); border-radius: 4px; padding: 9px 12px; font-size: 14px; box-shadow: none; }
-        .form-control:focus { border-color: var(--accent); box-shadow: none; }
+        .form-control { border: 1px solid var(--border); border-radius: 4px; padding: 9px 12px; font-size: 14px; }
         .current-image-box { border: 1px solid var(--border); padding: 14px; text-align: center; margin-bottom: 16px; }
         .current-image-box img { border: 1px solid var(--border); }
-        .current-image-box .img-label { display: block; font-size: 12.5px; color: var(--muted); margin-bottom: 10px; }
         hr.divider { border: none; border-top: 1px solid var(--border); margin: 22px 0; }
         .btn { border-radius: 4px; font-weight: 500; padding: 9px 20px; border: 1px solid transparent; font-size: 14px; }
         .btn-success { background: var(--accent); color: #fff; }
         .btn-success:hover { background: var(--accent-dark); color: #fff; }
         .btn-primary { background: #fff; color: var(--ink); border-color: var(--border); }
-        .btn-primary:hover { background: #f2f2f2; color: var(--ink); }
         .btn-default { background: #fff; color: var(--muted); border-color: var(--border); }
         .btn-default:hover { background: #f2f2f2; color: var(--ink); text-decoration: none; }
         .btn-group-actions { margin-top: 22px; }
@@ -33,41 +30,59 @@
 </head>
 <body>
     <div class="page-wrap">
-
         <div class="topbar">
-            <h1>Chỉnh sửa danh mục</h1>
-            <p>Cập nhật thông tin và hình ảnh cho danh mục</p>
+            <h1>Chỉnh sửa sản phẩm</h1>
+            <p>Cập nhật thông tin sản phẩm</p>
         </div>
 
         <div class="form-card">
-            <c:url value="/admin/category/edit" var="editUrl"></c:url>
+            <c:url value="/admin/product/edit" var="editUrl"></c:url>
             <form role="form" action="${editUrl}" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="id" value="${category.id}">
+                <input type="hidden" name="id" value="${product.id}">
 
                 <div class="form-group">
-                    <label>Tên danh mục</label>
-                    <input type="text" class="form-control" value="${category.name}" name="name" required />
+                    <label>Tên sản phẩm</label>
+                    <input type="text" class="form-control" name="name" value="${product.name}" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Danh mục</label>
+                    <select class="form-control" name="cateId" required>
+                        <c:forEach items="${cateList}" var="c">
+                            <option value="${c.id}" ${c.id == product.category.id ? 'selected' : ''}>${c.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Giá (VNĐ)</label>
+                    <input type="number" step="0.01" min="0" class="form-control" name="price" value="${product.price}" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Số lượng</label>
+                    <input type="number" min="0" class="form-control" name="quantity" value="${product.quantity}" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Mô tả</label>
+                    <textarea class="form-control" name="description" rows="4">${product.description}</textarea>
                 </div>
 
                 <hr class="divider">
 
                 <div class="form-group">
-                    <label>Ảnh đại diện</label>
-
+                    <label>Hình ảnh</label>
                     <div class="current-image-box">
-                        <span class="img-label">Ảnh hiện tại</span>
-                        <c:url value="/image?fname=${category.icon}" var="imgUrl"></c:url>
-                        <img class="img-responsive img-thumbnail" width="120px" src="${imgUrl}" alt="Current Image" onerror="this.src='https://via.placeholder.com/120x100?text=No+Image'" style="margin: 0 auto; border-radius: 0;">
+                        <c:url value="/image?fname=${product.image}" var="imgUrl"></c:url>
+                        <img width="120" src="${imgUrl}" alt="Ảnh hiện tại" onerror="this.src='https://via.placeholder.com/120x100?text=No+Image'">
                     </div>
-
-                    <label>Chọn ảnh mới (nếu muốn thay đổi)</label>
-                    <input type="file" name="icon" class="form-control" />
+                    <input type="file" name="image" class="form-control" />
                 </div>
 
                 <div class="btn-group-actions">
                     <button type="submit" class="btn btn-success">Cập nhật</button>
-                    <button type="reset" class="btn btn-primary">Làm mới</button>
-                    <a href="<c:url value='/admin/category/list'/>" class="btn btn-default">Quay lại danh sách</a>
+                    <a href="<c:url value='/admin/product/list'/>" class="btn btn-default">Quay lại danh sách</a>
                 </div>
             </form>
         </div>

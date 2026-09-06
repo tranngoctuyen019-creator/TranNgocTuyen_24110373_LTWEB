@@ -16,6 +16,8 @@
         </provider>
 
         <class>web.com.models.Category</class>
+        <class>web.com.models.Account</class>
+        <class>web.com.models.Product</class>
 
         <properties>
 
