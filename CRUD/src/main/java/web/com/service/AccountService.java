@@ -10,4 +10,6 @@ public interface AccountService {
     Account login(String usernameOrEmail, String password);
     String sendForgotPasswordOtp(String email);
     String resetPassword(String email, String otp, String newPassword);
+    Account getById(int id);
+    String updateProfile(int id, String fullName, String phone, String avatarPath);
 }

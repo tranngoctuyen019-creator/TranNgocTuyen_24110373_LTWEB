@@ -206,4 +206,35 @@ public class AccountServiceImpl implements AccountService {
 
         return null;
     }
+    
+    @Override
+    public Account getById(int id) {
+        return accountDAO.get(id);
+    }
+
+    @Override
+    public String updateProfile(int id, String fullName, String phone, String avatarPath) {
+
+        Account account = accountDAO.get(id);
+
+        if (account == null) {
+            return "Tài khoản không tồn tại.";
+        }
+
+        if (fullName == null || fullName.isBlank()) {
+            return "Vui lòng nhập họ tên.";
+        }
+
+        account.setFullName(fullName.trim());
+        account.setPhone(phone == null ? null : phone.trim());
+
+        // Chỉ ghi đè avatar khi người dùng thực sự upload ảnh mới
+        if (avatarPath != null && !avatarPath.isBlank()) {
+            account.setAvatar(avatarPath);
+        }
+
+        accountDAO.update(account);
+
+        return null;
+    }
 }

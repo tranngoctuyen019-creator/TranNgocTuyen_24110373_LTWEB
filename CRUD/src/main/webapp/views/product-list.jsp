@@ -6,14 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Sản phẩm</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <style>
-	:root { --ink: #1c1c1c; --muted: #6b6b6b; --border: #dcdcdc; --surface: #ffffff; --accent: #2f5d50; --accent-dark: #24463c; }
-	body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f6f6f4; color: var(--ink); }
-	.navbar-custom { background: #fff; border-bottom: 1px solid var(--border); border-radius: 0; box-shadow: none; margin-bottom: 0; }
-	.navbar-custom .navbar-brand { color: var(--ink) !important; font-weight: 600; }
-	.navbar-custom a { color: var(--muted) !important; font-weight: 400; }
-	.navbar-custom a:hover, .navbar-custom li.active a { color: var(--ink) !important; }
 	.page-wrap { max-width: 1180px; margin: 0 auto; padding: 36px 20px 60px; }
 	.topbar { border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 26px; }
 	.topbar h1 { font-size: 22px; font-weight: 600; margin: 0; }
@@ -39,30 +32,6 @@
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-custom">
-		<div class="container-fluid" style="max-width:1200px; margin:0 auto;">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="<c:url value='/home'/>">Ngọc Tuyên</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><a href="<c:url value='/home'/>">Trang chủ</a></li>
-				<li class="active"><a href="<c:url value='/product'/>">Sản phẩm</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<c:choose>
-					<c:when test="${not empty sessionScope.account}">
-						<li><a href="#">Xin chào, ${sessionScope.account.fullName}</a></li>
-						<li><a href="<c:url value='/logout'/>">Đăng xuất</a></li>
-					</c:when>
-					<c:otherwise>
-						<li><a href="<c:url value='/login'/>">Đăng nhập</a></li>
-						<li><a href="<c:url value='/register'/>">Đăng ký</a></li>
-					</c:otherwise>
-				</c:choose>
-			</ul>
-		</div>
-	</nav>
-
 	<div class="page-wrap">
 		<div class="topbar">
 			<h1>Tất cả sản phẩm</h1>
