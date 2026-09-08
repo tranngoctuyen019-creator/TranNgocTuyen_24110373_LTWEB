@@ -77,4 +77,29 @@ public class ProductServiceImpl implements ProductService {
 
         return Math.max(pages, 1);
     }
+
+    @Override
+    public List<Product> getPageByCategory(int cateId, int page, int pageSize) {
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        return productDAO.getPagedByCategory(cateId, page, pageSize);
+    }
+
+    @Override
+    public int getTotalPagesByCategory(int cateId, int pageSize) {
+
+        long total = productDAO.countByCategory(cateId);
+
+        int pages = (int) Math.ceil(total / (double) pageSize);
+
+        return Math.max(pages, 1);
+    }
+
+    @Override
+    public List<Product> getAllByCategory(int cateId) {
+        return productDAO.getAllByCategory(cateId);
+    }
 }

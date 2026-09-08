@@ -163,4 +163,60 @@ public class ProductDAOImpl implements ProductDAO {
             em.close();
         }
     }
+
+    @Override
+    public List<Product> getPagedByCategory(int cateId, int page, int pageSize) {
+
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            String jpql = "SELECT p FROM Product p WHERE p.category.id = :cateId ORDER BY p.id DESC";
+
+            TypedQuery<Product> query = em.createQuery(jpql, Product.class);
+            query.setParameter("cateId", cateId);
+            query.setFirstResult((page - 1) * pageSize);
+            query.setMaxResults(pageSize);
+
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public long countByCategory(int cateId) {
+
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            String jpql = "SELECT COUNT(p) FROM Product p WHERE p.category.id = :cateId";
+
+            TypedQuery<Long> query = em.createQuery(jpql, Long.class);
+            query.setParameter("cateId", cateId);
+
+            return query.getSingleResult();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Product> getAllByCategory(int cateId) {
+
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            String jpql = "SELECT p FROM Product p WHERE p.category.id = :cateId ORDER BY p.id DESC";
+
+            TypedQuery<Product> query = em.createQuery(jpql, Product.class);
+            query.setParameter("cateId", cateId);
+
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
 }

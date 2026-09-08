@@ -21,4 +21,10 @@ public interface ProductService {
     List<Product> getPage(int page, int pageSize);
 
     int getTotalPages(int pageSize);
+    
+    List<Product> getPageByCategory(int cateId, int page, int pageSize);
+
+    int getTotalPagesByCategory(int cateId, int pageSize);
+
+    List<Product> getAllByCategory(int cateId);
 }

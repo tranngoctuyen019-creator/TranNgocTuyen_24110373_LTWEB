@@ -30,9 +30,11 @@
 	}
 
 	.page-wrap {
-		max-width: 1100px;
-		margin: 0 auto;
-		padding: 40px 20px 60px;
+	    width: 100%;
+	    max-width: none;
+	    margin: 0;
+	    padding: 40px 40px 60px;
+	    box-sizing: border-box;
 	}
 
 	.topbar {
@@ -45,20 +47,20 @@
 	}
 
 	.topbar h1 {
-		font-size: 22px;
+		font-size: 25px;
 		font-weight: 600;
 		margin: 0;
 	}
 
 	.topbar p {
 		color: var(--muted);
-		font-size: 13.5px;
+		font-size: 15px;
 		margin: 4px 0 0;
 	}
 
 	.topbar a.home-link {
 		color: var(--muted);
-		font-size: 13.5px;
+		font-size: 15px;
 		text-decoration: none;
 		border-bottom: 1px solid transparent;
 	}
@@ -74,8 +76,8 @@
 		font-weight: 500;
 		border: none;
 		border-radius: 4px;
-		padding: 9px 18px;
-		font-size: 14px;
+		padding: 10px 20px;
+		font-size: 16px;
 		display: inline-block;
 		margin-bottom: 22px;
 		text-decoration: none;
@@ -99,15 +101,15 @@
 		border-bottom: 1px solid var(--border) !important;
 		border-top: none !important;
 		font-weight: 600;
-		font-size: 12.5px;
-		padding: 10px 12px;
+		font-size: 14px;
+		padding: 12px 14px;
 	}
 
 	.table > tbody > tr > td {
 		border-top: 1px solid #eee !important;
 		vertical-align: middle !important;
-		padding: 12px;
-		font-size: 14px;
+		padding: 14px;
+		font-size: 16px;
 	}
 
 	img.thumb {
@@ -119,9 +121,9 @@
 	.btn-sm {
 		border-radius: 4px;
 		font-weight: 500;
-		padding: 5px 12px;
+		padding: 6px 14px;
 		border: 1px solid transparent;
-		font-size: 13px;
+		font-size: 15px;
 	}
 
 	.btn-primary {
@@ -168,23 +170,15 @@
 
 			<div>
 				<h1>Quản lý sản phẩm</h1>
-				<p>Danh sách sản phẩm hiện có trong hệ thống</p>
+				<c:choose>
+					<c:when test="${not empty selectedCategory}">
+						<p>Sản phẩm trong danh mục: <strong>${selectedCategory.name}</strong></p>
+					</c:when>
+					<c:otherwise>
+						<p>Danh sách sản phẩm hiện có trong hệ thống</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
-
-			<span>
-
-				<a href="${categoryListUrl}" class="home-link">
-					Quản lý danh mục
-				</a>
-
-				&nbsp;|&nbsp;
-
-				<a href="${homeUrl}" class="home-link">
-					Về trang chủ
-				</a>
-
-			</span>
-
 		</div>
 
 		<a href="${addProductUrl}" class="btn-add">

@@ -35,10 +35,12 @@
         }
 
         .page-wrap {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px 20px 60px;
-        }
+		    width: 100%;
+		    max-width: none;
+		    margin: 0;
+		    padding: 40px 40px 60px;
+		    box-sizing: border-box;
+		}
 
         .topbar {
             display: flex;
@@ -190,21 +192,6 @@
                     Danh sách các danh mục sản phẩm hiện có trong hệ thống
                 </p>
             </div>
-
-            <span>
-
-                <a href="${productListUrl}" class="home-link">
-                    Quản lý sản phẩm
-                </a>
-
-                &nbsp;|&nbsp;
-
-                <a href="${homeUrl}" class="home-link">
-                    Về trang chủ
-                </a>
-
-            </span>
-
         </div>
 
         <a href="${addCategoryUrl}" class="btn-add">

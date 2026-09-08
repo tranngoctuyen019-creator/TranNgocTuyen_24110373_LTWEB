@@ -9,13 +9,29 @@
 	:root { --ink: #1c1c1c; --muted: #6b6b6b; --border: #dcdcdc; --surface: #ffffff; --accent: #2f5d50; --accent-dark: #24463c; --danger: #a13d3d; }
 	* { box-sizing: border-box; }
 	body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f6f6f4; color: var(--ink); margin: 0; }
-	.admin-layout { min-height: 100vh; }
-	.admin-main { min-width: 0; }
+	.admin-layout { min-height: 100vh; display: flex; }
+	.admin-sidebar { flex: 0 0 220px; max-width: 220px; background: var(--accent-dark); color: #fff; min-height: 100vh; padding: 22px 0; }
+	.admin-brand { font-size: 17px; font-weight: 600; padding: 0 20px 20px; color: #fff; }
+	.admin-brand span { font-weight: 400; opacity: .75; }
+	.admin-nav-heading { padding: 0 20px 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: #9fb9b1; }
+	.admin-nav { list-style: none; margin: 0 0 20px; padding: 0; }
+	.admin-nav li a { display: block; padding: 11px 20px; color: #dfe8e5; text-decoration: none; font-size: 15px; border-left: 3px solid transparent; }
+	.admin-nav li a:hover { background: rgba(255,255,255,.06); color: #fff; text-decoration: none; }
+	.admin-nav li a.active { background: rgba(255,255,255,.1); border-left-color: #fff; color: #fff; }
+	.admin-nav-divider { border-top: 1px solid rgba(255,255,255,.12); margin: 8px 20px 16px; }
+	.admin-sidebar-bottom { padding: 14px 20px 0; border-top: 1px solid rgba(255,255,255,.12); margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+	.admin-sidebar-bottom a { color: #cfe0da; font-size: 14px; text-decoration: none; }
+	.admin-sidebar-bottom a:hover { color: #fff; text-decoration: none; }
+	.admin-main { min-width: 0; flex: 1 1 auto; display: flex; flex-direction: column; min-height: 100vh; }
 	.admin-topbar { background: #fff; border-bottom: 1px solid var(--border); padding: 14px 26px; display: flex; justify-content: space-between; align-items: center; }
 	.admin-topbar-title { font-weight: 600; font-size: 15px; color: var(--muted); }
-	.admin-topbar-user { color: var(--ink) !important; font-size: 13.5px; text-decoration: none; }
-	.admin-content { padding: 30px 26px 50px; }
-	.admin-footer { padding: 16px 26px; color: var(--muted); font-size: 12.5px; border-top: 1px solid var(--border); }
+	.admin-topbar-user { color: var(--ink) !important; font-size: 15px; text-decoration: none; }
+	.admin-content { padding: 30px 26px 50px; flex: 1 1 auto; }
+	.admin-footer { padding: 16px 26px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); flex: 0 0 auto; }
+	@media (max-width: 767px) {
+		.admin-layout { flex-direction: column; }
+		.admin-sidebar { max-width: 100%; min-height: auto; }
+	}
 </style>
 
 <sitemesh:write property="head"/>
@@ -23,6 +39,7 @@
 </head>
 <body>
 	<div class="admin-layout">
+		<%@ include file="/commons/admin/left.jsp"%>
 		<div class="admin-main">
 			<%@ include file="/commons/admin/header.jsp"%>
 			<div class="admin-content">

@@ -10,8 +10,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import web.com.models.Category;
 import web.com.models.Product;
+import web.com.service.CategoryService;
 import web.com.service.ProductService;
+import web.com.service.impl.CategoryServiceImpl;
 import web.com.service.impl.ProductServiceImpl;
 import web.com.utils.Constant;
 
@@ -19,6 +22,7 @@ import web.com.utils.Constant;
 public class ProductListController extends HttpServlet {
 
     private final ProductService productService = new ProductServiceImpl();
+    private final CategoryService categoryService = new CategoryServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -42,17 +46,41 @@ public class ProductListController extends HttpServlet {
 
         int pageSize = Constant.PRODUCT_PAGE_SIZE;
 
-        int totalPages = productService.getTotalPages(pageSize);
+        Integer cateId = null;
+        String cateIdParam = req.getParameter("cateId");
 
-        if (page > totalPages) {
-            page = totalPages;
+        if (cateIdParam != null && !cateIdParam.isBlank()) {
+            try {
+                cateId = Integer.parseInt(cateIdParam);
+            } catch (NumberFormatException e) {
+                cateId = null;
+            }
         }
 
-        List<Product> products = productService.getPage(page, pageSize);
+        List<Product> products;
+        int totalPages;
+
+        if (cateId != null) {
+            totalPages = productService.getTotalPagesByCategory(cateId, pageSize);
+            if (page > totalPages) {
+                page = totalPages;
+            }
+            products = productService.getPageByCategory(cateId, page, pageSize);
+        } else {
+            totalPages = productService.getTotalPages(pageSize);
+            if (page > totalPages) {
+                page = totalPages;
+            }
+            products = productService.getPage(page, pageSize);
+        }
+
+        List<Category> categories = categoryService.getAll();
 
         req.setAttribute("productList", products);
         req.setAttribute("currentPage", page);
         req.setAttribute("totalPages", totalPages);
+        req.setAttribute("categories", categories);
+        req.setAttribute("selectedCateId", cateId);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("/views/product-list.jsp");
         dispatcher.forward(req, resp);

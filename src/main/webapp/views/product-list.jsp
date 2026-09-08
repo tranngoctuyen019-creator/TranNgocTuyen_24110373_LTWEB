@@ -20,6 +20,10 @@
 	.product-info .p-price { color: var(--ink); font-weight: 600; }
 	.product-info .p-cate { font-size: 11.5px; color: var(--muted); margin-bottom: 4px; }
 	.empty-box { background: var(--surface); border: 1px solid var(--border); padding: 40px; text-align: center; color: var(--muted); }
+	.category-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+	.category-filter a { display: inline-block; padding: 7px 16px; border: 1px solid var(--border); border-radius: 20px; color: var(--ink); font-size: 13px; text-decoration: none; background: var(--surface); }
+	.category-filter a:hover { border-color: var(--accent); color: var(--ink); text-decoration: none; }
+	.category-filter a.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 	.pagination-wrap { text-align: center; margin-top: 30px; }
 	.pagination > li > a { color: var(--ink); border-radius: 4px !important; margin: 0 3px; border-color: var(--border); }
 	.pagination > .active > a { background: var(--accent); border-color: var(--accent); }
@@ -36,6 +40,14 @@
 		<div class="topbar">
 			<h1>Tất cả sản phẩm</h1>
 			<p>Trang ${currentPage} / ${totalPages}</p>
+		</div>
+
+		<div class="category-filter">
+			<a href="<c:url value='/product'/>" class="${empty selectedCateId ? 'active' : ''}">Tất cả</a>
+			<c:forEach items="${categories}" var="cate">
+				<a href="<c:url value='/product'><c:param name='cateId' value='${cate.id}'/></c:url>"
+					class="${selectedCateId == cate.id ? 'active' : ''}">${cate.name}</a>
+			</c:forEach>
 		</div>
 
 		<c:choose>
@@ -63,15 +75,15 @@
 			<div class="pagination-wrap">
 				<ul class="pagination">
 					<li class="${currentPage == 1 ? 'disabled' : ''}">
-						<a href="<c:url value='/product'><c:param name="page" value="${currentPage - 1}"/></c:url>">&laquo;</a>
+						<a href="<c:url value='/product'><c:param name='page' value='${currentPage - 1}'/><c:if test='${not empty selectedCateId}'><c:param name='cateId' value='${selectedCateId}'/></c:if></c:url>">&laquo;</a>
 					</li>
 					<c:forEach begin="1" end="${totalPages}" var="i">
 						<li class="${i == currentPage ? 'active' : ''}">
-							<a href="<c:url value='/product'><c:param name="page" value="${i}"/></c:url>">${i}</a>
+							<a href="<c:url value='/product'><c:param name='page' value='${i}'/><c:if test='${not empty selectedCateId}'><c:param name='cateId' value='${selectedCateId}'/></c:if></c:url>">${i}</a>
 						</li>
 					</c:forEach>
 					<li class="${currentPage == totalPages ? 'disabled' : ''}">
-						<a href="<c:url value='/product'><c:param name="page" value="${currentPage + 1}"/></c:url>">&raquo;</a>
+						<a href="<c:url value='/product'><c:param name='page' value='${currentPage + 1}'/><c:if test='${not empty selectedCateId}'><c:param name='cateId' value='${selectedCateId}'/></c:if></c:url>">&raquo;</a>
 					</li>
 				</ul>
 			</div>

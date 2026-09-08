@@ -3,7 +3,7 @@
 
     <mapping path="/image" exclude="true"/>
     <mapping path="/image/*" exclude="true"/>
-
+    
     <mapping path="/admin/*" name="admin" decorator="admin.jsp"/>
     <mapping path="/*" name="web" decorator="web.jsp"/>
 

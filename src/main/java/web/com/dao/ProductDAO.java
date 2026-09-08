@@ -21,4 +21,10 @@ public interface ProductDAO {
     List<Product> getPaged(int page, int pageSize);
 
     long countAll();
+
+    List<Product> getPagedByCategory(int cateId, int page, int pageSize);
+
+    long countByCategory(int cateId);
+
+    List<Product> getAllByCategory(int cateId);
 }

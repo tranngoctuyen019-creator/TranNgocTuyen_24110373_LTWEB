@@ -24,6 +24,9 @@
 	.btn-view-all { background: var(--accent); color: #fff; border-radius: 4px; padding: 10px 24px; font-weight: 500; }
 	.btn-view-all:hover { background: var(--accent-dark); color: #fff; text-decoration: none; }
 	.empty-box { background: var(--surface); border: 1px solid var(--border); padding: 40px; text-align: center; color: var(--muted); }
+	.category-filter { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+	.category-filter a { display: inline-block; padding: 7px 16px; border: 1px solid var(--border); border-radius: 20px; color: var(--ink); font-size: 13px; text-decoration: none; background: var(--surface); }
+	.category-filter a:hover { border-color: var(--accent); color: var(--ink); text-decoration: none; }
 </style>
 </head>
 <body>
@@ -32,6 +35,14 @@
 			<h1>Chào mừng đến với Ngọc Tuyên Shop</h1>
 			<p>Khám phá những sản phẩm mới nhất của chúng tôi</p>
 		</div>
+
+		<c:if test="${not empty categories}">
+			<div class="category-filter">
+				<c:forEach items="${categories}" var="cate">
+					<a href="<c:url value='/product'><c:param name='cateId' value='${cate.id}'/></c:url>">${cate.name}</a>
+				</c:forEach>
+			</div>
+		</c:if>
 
 		<h3 class="section-title">Sản phẩm mới nhất</h3>
 
