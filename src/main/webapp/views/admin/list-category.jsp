@@ -11,10 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý danh mục</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
-
     <style>
         :root {
             --ink: #1c1c1c;
@@ -38,7 +34,7 @@
 		    width: 100%;
 		    max-width: none;
 		    margin: 0;
-		    padding: 40px 40px 60px;
+		    padding: 48px 56px 72px;
 		    box-sizing: border-box;
 		}
 
@@ -52,20 +48,20 @@
         }
 
         .topbar h1 {
-            font-size: 22px;
+            font-size: 32px;
             font-weight: 600;
             margin: 0;
         }
 
         .topbar p {
             color: var(--muted);
-            font-size: 13.5px;
+            font-size: 17px;
             margin: 4px 0 0;
         }
 
         .topbar a.home-link {
             color: var(--muted);
-            font-size: 13.5px;
+            font-size: 15px;
             text-decoration: none;
             border-bottom: 1px solid transparent;
         }
@@ -81,8 +77,8 @@
             font-weight: 500;
             border: none;
             border-radius: 4px;
-            padding: 9px 18px;
-            font-size: 14px;
+            padding: 14px 28px;
+            font-size: 19px;
             display: inline-block;
             margin-bottom: 22px;
             text-decoration: none;
@@ -97,6 +93,7 @@
         table {
             margin-bottom: 0 !important;
             background: var(--surface);
+            width: 100%
         }
 
         .table > thead > tr > th {
@@ -105,15 +102,15 @@
             border-bottom: 1px solid var(--border) !important;
             border-top: none !important;
             font-weight: 600;
-            font-size: 12.5px;
-            padding: 10px 12px;
+            font-size: 17px;
+            padding: 18px 20px;
         }
 
         .table > tbody > tr > td {
             border-top: 1px solid #eee !important;
             vertical-align: middle !important;
-            padding: 12px;
-            font-size: 14px;
+            padding: 20px 18px;
+            font-size: 18px;
         }
 
         img[alt="Icon"] {
@@ -130,9 +127,9 @@
         .btn-sm {
             border-radius: 4px;
             font-weight: 500;
-            padding: 5px 12px;
+            padding: 9px 18px;
             border: 1px solid transparent;
-            font-size: 13px;
+            font-size: 17px;
         }
 
         .btn-info {
@@ -233,8 +230,8 @@
                             </c:url>
 
                             <img
-                                height="56"
-                                width="76"
+                                height="80"
+                                width="110"
                                 src="${imgUrl}"
                                 alt="Icon"
                                 onerror="this.src='https://placehold.co/80x60?text=No+Image'" />
@@ -334,11 +331,7 @@
         </table>
 
     </div>
-
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-    </script>
-
+ 
 </body>
 
 </html>

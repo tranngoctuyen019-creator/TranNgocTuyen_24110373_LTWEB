@@ -33,7 +33,7 @@
 	    width: 100%;
 	    max-width: none;
 	    margin: 0;
-	    padding: 40px 40px 60px;
+	    padding: 48px 56px 72px;
 	    box-sizing: border-box;
 	}
 
@@ -47,14 +47,14 @@
 	}
 
 	.topbar h1 {
-		font-size: 25px;
+		font-size: 32px;
 		font-weight: 600;
 		margin: 0;
 	}
 
 	.topbar p {
 		color: var(--muted);
-		font-size: 15px;
+		font-size: 17px;
 		margin: 4px 0 0;
 	}
 
@@ -76,8 +76,8 @@
 		font-weight: 500;
 		border: none;
 		border-radius: 4px;
-		padding: 10px 20px;
-		font-size: 16px;
+		padding: 14px 28px;
+		font-size: 19px;
 		display: inline-block;
 		margin-bottom: 22px;
 		text-decoration: none;
@@ -101,15 +101,15 @@
 		border-bottom: 1px solid var(--border) !important;
 		border-top: none !important;
 		font-weight: 600;
-		font-size: 14px;
-		padding: 12px 14px;
+		font-size: 17px;
+		padding: 18px 20px;
 	}
 
 	.table > tbody > tr > td {
 		border-top: 1px solid #eee !important;
 		vertical-align: middle !important;
-		padding: 14px;
-		font-size: 16px;
+		padding: 20px 18px;
+		font-size: 18px;
 	}
 
 	img.thumb {
@@ -121,9 +121,9 @@
 	.btn-sm {
 		border-radius: 4px;
 		font-weight: 500;
-		padding: 6px 14px;
+		padding: 9px 18px;
 		border: 1px solid transparent;
-		font-size: 15px;
+		font-size: 17px;
 	}
 
 	.btn-primary {
@@ -223,8 +223,8 @@
 
 							<img
 								class="thumb"
-								height="56"
-								width="76"
+								height="80"
+								width="110"
 								src="${imgUrl}"
 								alt="Ảnh"
 								onerror="this.src='https://placehold.co/80x60?text=No+Image'" />
