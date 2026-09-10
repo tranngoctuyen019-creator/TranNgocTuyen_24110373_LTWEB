@@ -22,6 +22,9 @@
         .alert { border-radius: 4px; }
         .bottom-link { text-align: center; margin-top: 18px; font-size: 14.5px; color: var(--muted); }
         .bottom-link a { color: var(--ink); font-weight: 500; }
+        .role-options { display: flex; gap: 18px; }
+        .role-option { display: flex !important; align-items: center; gap: 6px; font-weight: 400 !important; margin-bottom: 0 !important; cursor: pointer; }
+        .role-option input { margin: 0; }
         
     </style>
 </head>
@@ -53,6 +56,19 @@
                 <div class="form-group">
                     <label>Mật khẩu</label>
                     <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu" required>
+                </div>
+                <div class="form-group">
+                    <label>Loại tài khoản</label>
+                    <div class="role-options">
+                        <label class="role-option">
+                            <input type="radio" name="role" value="USER" ${empty role || role != 'ADMIN' ? 'checked' : ''}>
+                            <span>Người dùng (User)</span>
+                        </label>
+                        <label class="role-option">
+                            <input type="radio" name="role" value="ADMIN" ${role == 'ADMIN' ? 'checked' : ''}>
+                            <span>Quản trị viên (Admin)</span>
+                        </label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-success" style="margin-top:10px;">Đăng ký</button>
             </form>

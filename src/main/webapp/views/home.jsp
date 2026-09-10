@@ -31,6 +31,9 @@
 </head>
 <body>
 	<div class="page-wrap">
+		<c:if test="${param.error == 'forbidden'}">
+			<div class="alert alert-danger">Bạn không có quyền truy cập khu vực quản trị.</div>
+		</c:if>
 		<div class="hero">
 			<h1>Chào mừng đến với Ngọc Tuyên Shop</h1>
 			<p>Khám phá những sản phẩm mới nhất của chúng tôi</p>

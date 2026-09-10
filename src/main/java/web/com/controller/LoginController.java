@@ -11,12 +11,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import web.com.models.Account;
 import web.com.service.AccountService;
+import web.com.service.CartService;
 import web.com.service.impl.AccountServiceImpl;
+import web.com.service.impl.CartServiceImpl;
 
 @WebServlet(urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
 
     private final AccountService accountService = new AccountServiceImpl();
+    private final CartService cartService = new CartServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -47,7 +50,33 @@ public class LoginController extends HttpServlet {
 
         HttpSession session = req.getSession(true);
         session.setAttribute("account", account);
+        session.setAttribute("cartCount", cartService.getTotalItemCount(account));
 
-        resp.sendRedirect(req.getContextPath() + "/home");
+        String redirect = req.getParameter("redirect");
+        resp.sendRedirect(resolveRedirect(req, redirect, account));
+    }
+
+    private String resolveRedirect(HttpServletRequest req, String redirect, Account account) {
+
+        if (redirect == null || redirect.isBlank()) {
+            return account.isAdmin()
+                    ? req.getContextPath() + "/admin/home"
+                    : req.getContextPath() + "/home";
+        }
+
+        if (redirect.startsWith(req.getContextPath() + "/")) {
+            return redirect;
+        }
+
+        try {
+            java.net.URI uri = java.net.URI.create(redirect);
+
+            if (uri.getHost() != null && uri.getHost().equalsIgnoreCase(req.getServerName())) {
+                return redirect;
+            }
+        } catch (IllegalArgumentException ignored) {
+        }
+
+        return req.getContextPath() + "/home";
     }
 }

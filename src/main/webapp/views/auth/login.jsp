@@ -41,6 +41,7 @@
             </c:if>
 
             <form action="<c:url value='/login'/>" method="post">
+                <input type="hidden" name="redirect" value="${param.redirect}">
                 <div class="form-group">
                     <label>Tên đăng nhập / Email</label>
                     <input type="text" class="form-control" name="username" value="${username}" required>

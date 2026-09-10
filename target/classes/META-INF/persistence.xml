@@ -18,6 +18,8 @@
         <class>web.com.models.Category</class>
         <class>web.com.models.Account</class>
         <class>web.com.models.Product</class>
+        <class>web.com.models.Cart</class>
+        <class>web.com.models.CartItem</class>
 
         <properties>
 

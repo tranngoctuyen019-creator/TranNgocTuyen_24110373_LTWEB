@@ -8,14 +8,19 @@
 		<ul class="nav navbar-nav">
 			<li><a href="<c:url value='/home'/>">Trang chủ</a></li>
 			<li><a href="<c:url value='/product'/>">Sản phẩm</a></li>
-			<c:if test="${not empty sessionScope.account}">
-				<li><a href="<c:url value='/admin/category/list'/>">Quản lý danh mục</a></li>
-				<li><a href="<c:url value='/admin/product/list'/>">Quản lý sản phẩm</a></li>
+			<c:if test="${not empty sessionScope.account && sessionScope.account.role == 'ADMIN'}">
+				<li><a href="<c:url value='/admin/home'/>">Trang quản trị</a></li>
 			</c:if>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<c:choose>
 				<c:when test="${not empty sessionScope.account}">
+					<li>
+						<a href="<c:url value='/cart'/>">
+							Giỏ hàng
+							<span id="cartCountBadge"><c:if test="${not empty sessionScope.cartCount && sessionScope.cartCount > 0}">(${sessionScope.cartCount})</c:if></span>
+						</a>
+					</li>
 					<li>
 						<a href="<c:url value='/profile'/>" class="nav-avatar-link">
 							<c:choose>

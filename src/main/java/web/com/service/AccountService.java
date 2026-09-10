@@ -4,7 +4,7 @@ import web.com.models.Account;
 
 public interface AccountService {
 	
-    String register(String username, String password, String email, String fullName);
+    String register(String username, String password, String email, String fullName, String role);
     String verifyRegisterOtp(String email, String otp);
     String resendActivationOtp(String email);
     Account login(String usernameOrEmail, String password);

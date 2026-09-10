@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import web.com.dao.AccountDAO;
 import web.com.dao.impl.AccountDAOImpl;
 import web.com.models.Account;
+import web.com.models.Role;
 import web.com.service.AccountService;
 import web.com.utils.MailUtil;
 import web.com.utils.OtpUtil;
@@ -12,8 +13,15 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountDAO accountDAO = new AccountDAOImpl();
 
+    private Role parseRole(String roleParam) {
+        if (roleParam != null && Role.ADMIN.name().equalsIgnoreCase(roleParam.trim())) {
+            return Role.ADMIN;
+        }
+        return Role.USER;
+    }
+
     @Override
-    public String register(String username, String password, String email, String fullName) {
+    public String register(String username, String password, String email, String fullName, String roleParam) {
 
         if (username == null || username.isBlank()
                 || password == null || password.isBlank()
@@ -32,19 +40,21 @@ public class AccountServiceImpl implements AccountService {
         }
 
         String otp = OtpUtil.generateOtp();
+        Role role = parseRole(roleParam);
 
         try {
             if (existedByEmail != null) {
                 existedByEmail.setUsername(username);
                 existedByEmail.setPassword(password);
                 existedByEmail.setFullName(fullName);
+                existedByEmail.setRole(role);
                 existedByEmail.setOtpCode(otp);
                 existedByEmail.setOtpExpiry(OtpUtil.newExpiry());
 
                 accountDAO.update(existedByEmail);
 
             } else {
-                Account account = new Account(username, password, email, fullName);
+                Account account = new Account(username, password, email, fullName, role);
                 account.setOtpCode(otp);
                 account.setOtpExpiry(OtpUtil.newExpiry());
 
@@ -228,7 +238,6 @@ public class AccountServiceImpl implements AccountService {
         account.setFullName(fullName.trim());
         account.setPhone(phone == null ? null : phone.trim());
 
-        // Chỉ ghi đè avatar khi người dùng thực sự upload ảnh mới
         if (avatarPath != null && !avatarPath.isBlank()) {
             account.setAvatar(avatarPath);
         }

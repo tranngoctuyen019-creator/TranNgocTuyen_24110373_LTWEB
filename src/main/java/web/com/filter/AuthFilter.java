@@ -12,8 +12,9 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import web.com.models.Account;
 
-@WebFilter(urlPatterns = { "/admin/*" })
+@WebFilter(urlPatterns = { "/admin/*", "/cart/*" })
 public class AuthFilter implements Filter {
 
     @Override
@@ -31,9 +32,39 @@ public class AuthFilter implements Filter {
         boolean isLoggedIn = (session != null && session.getAttribute("account") != null);
 
         if (isLoggedIn) {
+            String path = req.getRequestURI();
+
+            if (path.startsWith(req.getContextPath() + "/admin")) {
+                Account account = (Account) session.getAttribute("account");
+
+                if (account == null || !account.isAdmin()) {
+                    resp.sendRedirect(req.getContextPath() + "/home?error=forbidden");
+                    return;
+                }
+            }
+
             chain.doFilter(request, response);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/login");
+
+            String target;
+
+            if ("GET".equalsIgnoreCase(req.getMethod())) {
+                target = req.getRequestURI();
+                String queryString = req.getQueryString();
+
+                if (queryString != null) {
+                    target += "?" + queryString;
+                }
+            } else {
+              
+                String referer = req.getHeader("Referer");
+                target = (referer != null && !referer.isBlank())
+                        ? referer
+                        : req.getContextPath() + "/home";
+            }
+
+            String encodedTarget = java.net.URLEncoder.encode(target, java.nio.charset.StandardCharsets.UTF_8);
+            resp.sendRedirect(req.getContextPath() + "/login?redirect=" + encodedTarget);
         }
     }
 

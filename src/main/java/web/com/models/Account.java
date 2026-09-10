@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -61,12 +63,25 @@ public class Account implements Serializable {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false, length = 20)
+    private Role role = Role.USER;
+
     public Account(String username, String password, String email, String fullName) {
+        this(username, password, email, fullName, Role.USER);
+    }
+
+    public Account(String username, String password, String email, String fullName, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.fullName = fullName;
         this.active = false;
         this.createdAt = LocalDateTime.now();
+        this.role = (role != null) ? role : Role.USER;
+    }
+
+    public boolean isAdmin() {
+        return this.role == Role.ADMIN;
     }
 }

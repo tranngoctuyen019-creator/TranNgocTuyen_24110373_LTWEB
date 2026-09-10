@@ -34,14 +34,16 @@ public class RegisterController extends HttpServlet {
         String password = req.getParameter("password");
         String email = req.getParameter("email");
         String fullName = req.getParameter("fullName");
+        String role = req.getParameter("role");
 
-        String error = accountService.register(username, password, email, fullName);
+        String error = accountService.register(username, password, email, fullName, role);
 
         if (error != null) {
             req.setAttribute("error", error);
             req.setAttribute("username", username);
             req.setAttribute("email", email);
             req.setAttribute("fullName", fullName);
+            req.setAttribute("role", role);
 
             req.getRequestDispatcher("/views/auth/register.jsp").forward(req, resp);
             return;

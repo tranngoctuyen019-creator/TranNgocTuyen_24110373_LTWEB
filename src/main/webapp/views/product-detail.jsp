@@ -37,6 +37,17 @@
 	.detail-info .p-desc { font-size: 14.5px; line-height: 1.8; color: #45473f; }
 	.back-link { display:inline-block; margin-top: 22px; color: var(--muted); font-size: 13.5px; }
 	.back-link:hover { color: var(--ink); }
+	.toast-notify {
+		position: fixed; top: 24px; right: 24px; z-index: 9999;
+		background: var(--accent); color: #fff; padding: 14px 22px;
+		border-radius: 4px; font-size: 14.5px; font-weight: 500;
+		box-shadow: 0 4px 14px rgba(0,0,0,.15);
+		opacity: 0; transform: translateY(-10px);
+		transition: opacity .25s ease, transform .25s ease;
+		pointer-events: none;
+	}
+	.toast-notify.error { background: var(--danger, #a13d3d); }
+	.toast-notify.show { opacity: 1; transform: translateY(0); }
 </style>
 </head>
 <body>
@@ -73,7 +84,11 @@
 				</div>
 
 				<div class="action-row">
-					<button type="button" class="btn-cart" onclick="alert('Chức năng giỏ hàng đang được phát triển.');">Thêm vào giỏ hàng</button>
+					<form id="addToCartForm" method="post" action="<c:url value='/cart/add'/>" style="display:contents;">
+						<input type="hidden" name="productId" value="${product.id}">
+						<input type="hidden" id="qtyHidden" name="quantity" value="1">
+						<button type="submit" id="addToCartBtn" class="btn-cart" ${product.quantity <= 0 ? 'disabled' : ''}>Thêm vào giỏ hàng</button>
+					</form>
 					<button type="button" class="btn-buy" onclick="alert('Chức năng đặt hàng đang được phát triển.');">Mua ngay</button>
 				</div>
 
@@ -86,6 +101,8 @@
 		<a class="back-link" href="<c:url value='/product'/>">&larr; Quay lại danh sách sản phẩm</a>
 	</div>
 
+	<div id="toast" class="toast-notify"></div>
+
 	<script>
 		var maxQty = ${product.quantity > 0 ? product.quantity : 0};
 		function changeQty(delta) {
@@ -95,6 +112,58 @@
 			if (val < 1) val = 1;
 			if (maxQty > 0 && val > maxQty) val = maxQty;
 			input.value = val;
+
+			var qtyHidden = document.getElementById('qtyHidden');
+			if (qtyHidden) {
+				qtyHidden.value = val;
+			}
+		}
+
+		var toastTimer = null;
+		function showToast(message, isError) {
+			var toast = document.getElementById('toast');
+			toast.textContent = message;
+			toast.classList.toggle('error', !!isError);
+			toast.classList.add('show');
+			clearTimeout(toastTimer);
+			toastTimer = setTimeout(function () {
+				toast.classList.remove('show');
+			}, 2500);
+		}
+
+		var addToCartForm = document.getElementById('addToCartForm');
+		if (addToCartForm) {
+			addToCartForm.addEventListener('submit', function (e) {
+				e.preventDefault();
+
+				var btn = document.getElementById('addToCartBtn');
+				var originalText = btn.textContent;
+				btn.disabled = true;
+
+				fetch(addToCartForm.action, {
+					method: 'POST',
+					headers: { 'X-Requested-With': 'XMLHttpRequest' },
+					body: new URLSearchParams(new FormData(addToCartForm))
+				})
+					.then(function (res) { return res.json(); })
+					.then(function (data) {
+						showToast(data.message || 'Đã thêm sản phẩm vào giỏ hàng!', !data.success);
+
+						if (data.success && typeof data.cartCount === 'number') {
+							var badge = document.getElementById('cartCountBadge');
+							if (badge) {
+								badge.textContent = data.cartCount > 0 ? '(' + data.cartCount + ')' : '';
+							}
+						}
+					})
+					.catch(function () {
+						showToast('Có lỗi xảy ra, vui lòng thử lại.', true);
+					})
+					.finally(function () {
+						btn.disabled = (maxQty <= 0);
+						btn.textContent = originalText;
+					});
+			});
 		}
 	</script>
 </body>
